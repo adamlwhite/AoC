@@ -23,14 +23,9 @@ int main()
                 strDir = line.front();
                 strNum = line.substr(1);
                 num = stoi(strNum);
-                int temp = 0;
 
                 if (strDir == "L"){
-                    temp = num/100;
-                    if (point )
-                    
                     point -= num;
-
                     while (point < 0){
                         point += 100;
                         if (point != 0){
