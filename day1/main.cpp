@@ -27,12 +27,11 @@ int main()
                 if (strDir == "L"){
                     if (point != 0){
                         point -= num;
-                        //If point is 0 and +->100 then click will be incremented despite not passing 0
                         while (point < 0){
                             point += 100;
-                            if (point != 0){
+                            //if (point != 0){
                                 countClick++;
-                            }
+                            //}
                         }
                     }
                     else if (point == 0){
@@ -40,13 +39,11 @@ int main()
                         //If point is 0 and +->100 then click will be incremented despite not passing 0
                         while (point < 0){
                             point += 100;
-                            if (point != 0){
+                            //if (point != 0){
                                 countClick++;
-                            }
-                            
-
+                            //}
                         }
-                        countClick--;
+                        countClick--; //Thus extra increment must be removed.
                     }
                 }
                 else if (strDir == "R"){
