@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <cstring>
 #include <cmath>
+#include <algorithm>
 
 std::ifstream fData("data/data");
 
@@ -19,10 +20,10 @@ struct Range{
 int main(){
 
     std::vector<Range> ranges;
-    long num;
+    long long num;
     int numLen;
 
-    int count = 0;
+    long count = 0;
 
     while (fData.is_open()){
         int i = 0;
@@ -40,28 +41,45 @@ int main(){
     }
 
     for(Range range : ranges){
-        std::vector<int> factors;
         std::string strNum;
         //std::cout << range.start << std::endl;
 
-        for(num = stol(range.start);num<=stol(range.end);num++){
-
+        long long rStart = stol(range.start);
+        long long rEnd = stol(range.end);
+        bool isTrue = false;
+        for(num = rStart;num<=rEnd;num++){
+            std::vector<int> factors;
             strNum = std::to_string(num);
             //std::cout << num << std::endl;
 
             int strLen = strNum.length();
 
-            if (strLen % 2 == 0){
-                //std::cout << strLen << std::endl;
-                std::string sStart = strNum.substr(0, strLen/2);
-
-                std::string sEnd = strNum.substr((strLen/2));
-                
-                if (sStart == sEnd){
-                    std::cout << sStart << "," << sEnd << std::endl;
-                    count += num;
+            for(int j=1;j<=strLen;j++){
+                if (strLen%j==0){
+                    factors.push_back(j);
+                    //std::cout << j << std::endl;
                 }
             }
+
+
+            for (int factor : factors){
+                //std::cout << strLen << std::endl;
+                if(factor !=strLen){
+                    std::vector<std::string> sStrings;
+                    for (int i = 0; i<(strLen/factor); i++){
+                        sStrings.push_back(strNum.substr(i*factor, factor));
+                    }
+                    if ( std::adjacent_find( sStrings.begin(), sStrings.end(), std::not_equal_to<>() ) == sStrings.end() ){
+                        isTrue = true;
+                    }
+
+                }
+            }
+            if (isTrue){
+                count += num;
+                isTrue = false;
+            }
+        
         }
 
     }
